@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>THE BUTTON</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/styles.css" />
+    <script src="/public/script/timeutility.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      
+      <h1 id="counter">100</h1>
+      <h1 id="count"> 0 </h1>
+      <div id="thebutton"/>
+
+    </div>
+
+    <script>
+      
+      var socket = io();
+      
+      var button  = document.getElementById('thebutton');
+      var counter = document.getElementById('counter');
+      var count   = document.getElementById('count');
+
+      var xhr = new XMLHttpRequest();
+      xhr.addEventListener("load", function() {
+      	count.innerHTML = this.responseText;
+      });
+      xhr.open('GET', '/count', true);
+      xhr.send();
+
+      
+      button.onclick = function() {
+        socket.emit('click');
+      };
+
+      socket.on('confirm click', function(num) {
+      	count.innerHTML = secondsToStr(num);
+      });
+      
+      socket .on('tick', function(ms) {
+        counter.innerHTML = ms;
+      });
+
+      socket.on('reset', function() {
+      	counter.innerHTML = 0;
+      });
+      
+    </script>
+
+  </body>
+</html>

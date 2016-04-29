@@ -1,0 +1,17 @@
+{
+  "name": "thebutton",
+  "version": "0.1.0",
+  "description": "A toy example to learn more about the web and mobile",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Epholys",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.13.4",
+    "morgan": "^1.7.0",
+    "serve-static": "^1.10.2",
+    "socket.io": "^1.4.5"
+  }
+}
