@@ -34,3 +34,6 @@ web/.node_repl_history
 
 # Emacs save files
 *\~
+
+# Database
+web/*.db

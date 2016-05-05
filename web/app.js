@@ -8,10 +8,10 @@ var http        = require('http').Server(app),
 var io          = require('socket.io')(http);
 
 
-var count   = fs.readFileSync(__dirname+'/count.db', 'utf8');
+var count   = fs.readFileSync(__dirname+'/count.db', 'utf8') || 0;
 var counter = 0;
 var interval;
-var switcher;
+var locked;
 
 
 app.use(logger('common'));
@@ -20,7 +20,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 app.get('/count', function(req, res) {
-    res.status(200).send(count);
+    res.status(200).send(""+count);
 });
 
 
@@ -29,11 +29,11 @@ io.on('connection', function(socket){
 
     socket.on('click', function() {
 
-        if(!switcher) {
+        if(!locked) {
+            locked = true;
             count++;
             fs.writeFile(__dirname+'/count.db', count);
             io.emit('confirm click', count);
-            switcher = true;
             counter = 100;
 
             interval = setInterval(function() {
@@ -43,7 +43,7 @@ io.on('connection', function(socket){
                     clearInterval(interval);
                     counter = 100;
                     io.emit('reset');
-                    switcher = false;
+                    locked = false;
                 }
             },
                                    10);

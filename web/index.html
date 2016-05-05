@@ -27,7 +27,7 @@
 
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function() {
-      	count.innerHTML = this.responseText;
+      	count.innerHTML = secondsToStr(this.responseText);
       });
       xhr.open('GET', '/count', true);
       xhr.send();
