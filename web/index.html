@@ -24,7 +24,9 @@
       var button  = document.getElementById('thebutton');
       var counter = document.getElementById('counter');
       var count   = document.getElementById('count');
-
+      var done    = true;
+      var locked  = false;
+      
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function() {
       	count.innerHTML = secondsToStr(this.responseText);
@@ -32,21 +34,36 @@
       xhr.open('GET', '/count', true);
       xhr.send();
 
-      
       button.onclick = function() {
+        if(locked)
+          return;
+
         socket.emit('click');
+
+        locked = true;
+        done   = false;
+
+        interval = setInterval(function() {
+          if(done) {
+            clearInterval(interval);
+          }
+          else {
+            counter.innerHTML -= 1;
+            if(counter.innerHTML <= 0 || done)
+              clearInterval(interval);
+          }
+        },
+                                10);
       };
 
       socket.on('confirm click', function(num) {
-      	count.innerHTML = secondsToStr(num);
+        count.innerHTML = secondsToStr(num);
       });
       
-      socket .on('tick', function(ms) {
-        counter.innerHTML = ms;
-      });
-
       socket.on('reset', function() {
-      	counter.innerHTML = 0;
+        counter.innerHTML = 100;    
+        done = true;
+        locked = false;
       });
       
     </script>

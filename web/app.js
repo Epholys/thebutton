@@ -9,7 +9,6 @@ var io          = require('socket.io')(http);
 
 
 var count   = fs.readFileSync(__dirname+'/count.db', 'utf8') || 0;
-var counter = 0;
 var interval;
 var locked;
 
@@ -33,20 +32,15 @@ io.on('connection', function(socket){
             locked = true;
             count++;
             fs.writeFile(__dirname+'/count.db', count);
-            io.emit('confirm click', count);
-            counter = 100;
 
-            interval = setInterval(function() {
-                counter--;
-                io.emit('tick', counter);
-                if(counter == 0) {
-                    clearInterval(interval);
-                    counter = 100;
-                    io.emit('reset');
-                    locked = false;
-                }
+            io.emit('confirm click', count);
+
+            interval = setTimeout(function() {
+                clearInterval(interval);
+                io.emit('reset');
+                locked = false;
             },
-                                   10);
+                                  1000);
 
         }
     });
