@@ -23,13 +23,15 @@
       
       var button  = document.getElementById('thebutton');
       var counter = document.getElementById('counter');
-      var count   = document.getElementById('count');
+      var counth1 = document.getElementById('count');
+      var count   = 0
       var done    = true;
       var locked  = false;
       
       var xhr = new XMLHttpRequest();
       xhr.addEventListener("load", function() {
-      	count.innerHTML = secondsToStr(this.responseText);
+        counth1.innerHTML = secondsToStr(this.responseText);
+        count = this.responseText
       });
       xhr.open('GET', '/count', true);
       xhr.send();
@@ -43,7 +45,7 @@
         locked = true;
         done   = false;
 
-        count.innerHTML++;
+        counth1.innerHTML = secondsToStr(++count);
 
         interval = setInterval(function() {
           if(done) {
@@ -59,7 +61,7 @@
       };
 
       socket.on('confirm click', function(num) {
-        count.innerHTML = secondsToStr(num);
+        counth1.innerHTML = secondsToStr(num);
       });
       
       socket.on('reset', function() {
