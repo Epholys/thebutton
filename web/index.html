@@ -52,7 +52,8 @@
             clearInterval(interval);
           }
           else {
-            counter.innerHTML -= 1;
+            if(counter.innerHTML > 0)
+              counter.innerHTML -= 1;
             if(counter.innerHTML <= 0 || done)
               clearInterval(interval);
           }
