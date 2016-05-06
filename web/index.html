@@ -43,6 +43,8 @@
         locked = true;
         done   = false;
 
+        count.innerHTML++;
+
         interval = setInterval(function() {
           if(done) {
             clearInterval(interval);
