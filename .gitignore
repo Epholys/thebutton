@@ -36,4 +36,4 @@ web/.node_repl_history
 *\~
 
 # Database
-web/*.db
+web/count.db
