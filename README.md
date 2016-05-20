@@ -4,8 +4,4 @@
 
 ## What is this?
 
-A minimal toy example to learn different environments and technology stacks by replicating the same button with the same functionnality across them.
-
-## What are the specifications?
-
-* One click per second only
+A little experiment and learning experience : a button that does... nothing. Excepted counting every second spend clicking on it :).
